@@ -48,5 +48,9 @@ public class StudentLessonService {
         studentLesson.setStudent(student.get());
         studentLessonRepository.save(studentLesson);
     }
+    public List<Student> getRegisteredStudentsForLesson(Long lessonId) {
+        List<Student> registeredStudentList = studentRepository.findByStudentLessonsLessonId(lessonId);
+        return registeredStudentList;
+    }
 
 }

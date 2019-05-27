@@ -43,4 +43,11 @@ public class StudentLessonController {
         studentLessonService.addStudentToLesson(studentLessonDto);
         return ResponseEntity.ok().build();
     }
+    @PostMapping(path = "/get-registered-students")
+    @ResponseBody
+    public ResponseEntity<List<Student>> getRegisteredStudentsForLesson(
+            @RequestParam Long lessonId) {
+        return ResponseEntity.ok(studentLessonService.getRegisteredStudentsForLesson(lessonId));
+    }
+
 }
