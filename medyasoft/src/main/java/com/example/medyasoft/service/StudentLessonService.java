@@ -7,6 +7,8 @@ import com.example.medyasoft.domain.dto.StudentLessonDto;
 import com.example.medyasoft.repository.LessonRepository;
 import com.example.medyasoft.repository.StudentLessonRepository;
 import com.example.medyasoft.repository.StudentRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -26,12 +28,12 @@ public class StudentLessonService {
         this.studentLessonRepository = studentLessonRepository;
     }
 
-    public List<Lesson> findAllLessons() {
-        List<Lesson> lessonList = lessonRepository.findAll();
+    public Page<Lesson> findAllLessons(int pageNumber, int pageSize) {
+        Page<Lesson> lessonList = lessonRepository.findAll(PageRequest.of(pageNumber, pageSize));
         return lessonList;
     }
-    public List<Student> findAllStudents() {
-        List<Student> studentList = studentRepository.findAll();
+    public Page<Student> findAllStudents(int pageNumber, int pageSize) {
+        Page<Student> studentList = studentRepository.findAll(PageRequest.of(pageNumber, pageSize));
         return studentList;
     }
     public List<Student> additiveStudentsList(Long lessonId) {

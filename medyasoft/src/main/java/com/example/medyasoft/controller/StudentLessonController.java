@@ -4,6 +4,7 @@ import com.example.medyasoft.domain.Lesson;
 import com.example.medyasoft.domain.Student;
 import com.example.medyasoft.domain.dto.StudentLessonDto;
 import com.example.medyasoft.service.StudentLessonService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,13 +22,13 @@ public class StudentLessonController {
 
     @GetMapping(path = "/all-lessons")
     @ResponseBody
-    public ResponseEntity<List<Lesson>> findAllLessons() {
-        return ResponseEntity.ok(studentLessonService.findAllLessons());
+    public ResponseEntity<Page<Lesson>> findAllLessons(@RequestParam int pageNumber, @RequestParam int pageSize) {
+        return ResponseEntity.ok(studentLessonService.findAllLessons(pageNumber, pageSize));
     }
     @GetMapping(path = "/all-students")
     @ResponseBody
-    public ResponseEntity<List<Student>> findAllStudents() {
-        return ResponseEntity.ok(studentLessonService.findAllStudents());
+    public ResponseEntity<Page<Student>> findAllStudents(@RequestParam int pageNumber, @RequestParam int pageSize) {
+        return ResponseEntity.ok(studentLessonService.findAllStudents(pageNumber, pageSize));
     }
     @PostMapping(path = "/additive-students-list")
     @ResponseBody
