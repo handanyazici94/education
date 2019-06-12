@@ -2,9 +2,11 @@ package com.example.medyasoft.controller;
 
 import com.example.medyasoft.domain.Lesson;
 import com.example.medyasoft.domain.Student;
+import com.example.medyasoft.domain.dto.PageableDto;
 import com.example.medyasoft.domain.dto.StudentLessonDto;
 import com.example.medyasoft.service.StudentLessonService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,17 +27,20 @@ public class StudentLessonController {
     public ResponseEntity<Page<Lesson>> findAllLessons(@RequestParam int pageNumber, @RequestParam int pageSize) {
         return ResponseEntity.ok(studentLessonService.findAllLessons(pageNumber, pageSize));
     }
-    @GetMapping(path = "/all-students")
+    @PostMapping(path = "/all-students")
     @ResponseBody
-    public ResponseEntity<Page<Student>> findAllStudents(@RequestParam int pageNumber, @RequestParam int pageSize) {
-        return ResponseEntity.ok(studentLessonService.findAllStudents(pageNumber, pageSize));
+    public ResponseEntity<Page<Student>> findAllStudents(
+            @RequestBody PageableDto pageableDto) {
+        return ResponseEntity.ok(studentLessonService.findAllStudents(pageableDto.getPageNumber(), pageableDto.getPageSize()));
     }
-    @PostMapping(path = "/additive-students-list")
+    @GetMapping(path = "/additive-students-list")
     @ResponseBody
-    public ResponseEntity<List<Student>> additiveStudentsList(
-            @RequestParam Long lessonId) {
+    public ResponseEntity<Page<Student>> additiveStudentsList(
+            @RequestParam Long lessonId,
+            @RequestParam int pageNumber,
+            @RequestParam int pageSize) {
 
-        return ResponseEntity.ok(studentLessonService.additiveStudentsList(lessonId));
+        return ResponseEntity.ok(studentLessonService.additiveStudentsList(lessonId, pageNumber, pageSize));
     }
     @PostMapping(path = "/add-student-to-lesson")
     @ResponseBody
@@ -44,11 +49,13 @@ public class StudentLessonController {
         studentLessonService.addStudentToLesson(studentLessonDto);
         return ResponseEntity.ok().build();
     }
-    @PostMapping(path = "/get-registered-students")
+    @GetMapping(path = "/get-registered-students")
     @ResponseBody
-    public ResponseEntity<List<Student>> getRegisteredStudentsForLesson(
-            @RequestParam Long lessonId) {
-        return ResponseEntity.ok(studentLessonService.getRegisteredStudentsForLesson(lessonId));
+    public ResponseEntity<Page<Student>> getRegisteredStudentsForLesson(
+            @RequestParam Long lessonId,
+            @RequestParam int pageNumber,
+            @RequestParam int pageSize) {
+        return ResponseEntity.ok(studentLessonService.getRegisteredStudentsForLesson(lessonId, pageNumber, pageSize));
     }
 
 }
